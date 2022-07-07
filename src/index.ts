@@ -3,17 +3,14 @@ import cors from 'cors';
 import * as http from 'http';
 import * as winston from 'winston';
 import * as expressWinston from 'express-winston';
-import {CommonRoutesConfig} from './routes/common.routes.config';
-import {UsersRoutes} from './routes/users.routes.config';
 import debug from 'debug';
+import router, { configRoutes } from './routes';
 
 const app: express.Application = express();
 
 const server: http.Server = http.createServer(app);
 
 const port = 5000;
-
-const routes: Array<CommonRoutesConfig> = [];
 
 const debugLog: debug.IDebugger = debug('app');
 
@@ -41,9 +38,8 @@ if (!process.env.DEBUG) {
 // initialize the logger with the above configuration
 app.use(expressWinston.logger(loggerOptions));
 
-// here we are adding the UserRoutes to our array,
-// after sending the Express.js application object to have the routes added to our app!
-routes.push(new UsersRoutes(app));
+// Initialize router
+app.use('/v1', router);
 
 // this is a simple route to make sure everything is working properly
 const runningMessage = `Server running at http://localhost:${port}`;
@@ -52,8 +48,8 @@ app.get('/', (req: express.Request, res: express.Response) => {
 });
 
 server.listen(port, () => {
-  routes.forEach((route: CommonRoutesConfig) => {
-    debugLog(`Routes configured for ${route.getName()}`);
+  configRoutes.forEach((route) => {
+    debugLog(`Routes configured for ${route.name}`);
   });
   // our only exception to avoiding console.log(), because we
   // always want to know when the server is done starting up
