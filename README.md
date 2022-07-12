@@ -9,7 +9,7 @@
 - [Environment](#environment)
 - [Available Scripts](#available-scripts)
 - [Architecture](#architecture)
-- Linting and Formating
+- [Linting and Formating](#linting-and-formating)
 - [Editor intergration](#editor-integration)
 
 ## Getting Started
