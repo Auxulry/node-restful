@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import ApiController from './api.controller';
+import jwt from 'jsonwebtoken';
 
 class AuthController extends ApiController {
   constructor() {
@@ -16,11 +17,16 @@ class AuthController extends ApiController {
    * @param res
    */
   authenticated(req: Request, res: Response): void {
+    const token = jwt.sign({
+      id: 1,
+      name: 'johndoe@gmail.com'
+    }, 'shhhhh', { expiresIn: '1h' });
+
     this.response(res, {
       status: 200,
       message: 'Authentication Posted',
       data: {
-        token: 'SAZXasasads'
+        token: token
       }
     });
   }
