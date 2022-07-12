@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
-import responser from '../utils/responser';
+import ApiController from './api.controller';
 
-class AuthController {
+class AuthController extends ApiController {
   constructor() {
+    super();
     this.authenticated = this.authenticated.bind(this);
     this.unauthenticated = this.unauthenticated.bind(this);
   }
@@ -15,10 +16,12 @@ class AuthController {
    * @param res
    */
   authenticated(req: Request, res: Response): void {
-    responser(res, {
+    this.response(res, {
       status: 200,
       message: 'Authentication Posted',
-      data: null
+      data: {
+        token: 'SAZXasasads'
+      }
     });
   }
 
@@ -30,7 +33,7 @@ class AuthController {
    * @param res
    */
   unauthenticated(req: Request, res: Response): void {
-    responser(res, {
+    this.response(res, {
       status: 200,
       message: 'Unauthenticated Posted',
       data: null
