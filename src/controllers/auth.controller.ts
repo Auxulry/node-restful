@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import ApiController from './api.controller';
 import jwt from 'jsonwebtoken';
+import fs from 'fs';
+import path from 'path';
 
 class AuthController extends ApiController {
   constructor() {
@@ -17,10 +19,16 @@ class AuthController extends ApiController {
    * @param res
    */
   authenticated(req: Request, res: Response): void {
+    const { email, password } = req.body;
+
+    // * Algorithm RS526
+    // * You Need Private Key and Public Key
+    const privateKey = fs.readFileSync(path.resolve(__dirname, '../keys/private.key'), 'utf8');
+
     const token = jwt.sign({
-      id: 1,
-      name: 'johndoe@gmail.com'
-    }, 'shhhhh', { expiresIn: '1h' });
+      email: email,
+      password: password
+    }, privateKey, { expiresIn: '1h', algorithm: 'RS256' });
 
     this.response(res, {
       status: 200,

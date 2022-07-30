@@ -1,5 +1,6 @@
 import { IRouter, NextFunction, Request, Response, Router } from 'express';
 import AuthController from '../controllers/auth.controller';
+import authenticated from '../middlewares/auth';
 
 const authRoutes: IRouter = Router();
 
@@ -9,9 +10,6 @@ const Controller = new AuthController();
 authRoutes
   .route('/login')
   .all((req: Request, res: Response, next: NextFunction) => {
-    // this middleware function runs before any request to /users/:id
-    // but it doesn't accomplish anything just yet---
-    // it simply passes control to the next applicable function below using next()
     next();
   })
   .post(Controller.authenticated);
@@ -19,10 +17,7 @@ authRoutes
 authRoutes
   .route('/logout')
   .all((req: Request, res: Response, next: NextFunction) => {
-    // this middleware function runs before any request to /users/:id
-    // but it doesn't accomplish anything just yet---
-    // it simply passes control to the next applicable function below using next()
-    next();
+    authenticated(req, res, next);
   })
   .post(Controller.unauthenticated);
 

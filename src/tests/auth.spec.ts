@@ -1,9 +1,12 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
-
+import ApiController from '../controllers/api.controller';
 import server from '../index';
 
-// Assertion
+const api = new ApiController();
+const token = api.genTempToken('example@mail.com', 'password123');
+
+// * Assertion
 chai.should();
 chai.use(chaiHttp);
 
@@ -14,8 +17,16 @@ const nullAssertion = null;
 describe('Authentication Service', () => {
   describe('Test POST route /login', () => {
     it('It should return token', (done) => {
+      const payload = {
+        email: 'example@mail.com',
+        password: 'password'
+      };
+
+      console.log(payload, 'chai payload 1');
+
       chai.request(server)
         .post(`${basePath}/login`)
+        .send(payload)
         .end((err, res) => {
           res.should.have.status(200);
           res.should.be.a('object');
@@ -31,6 +42,7 @@ describe('Authentication Service', () => {
     it('It should return null', (done) => {
       chai.request(server)
         .post(`${basePath}/logout`)
+        .set('Authorization', token)
         .end((err, res) => {
           res.should.have.status(200);
           expect(res.body.data).to.eq(nullAssertion);

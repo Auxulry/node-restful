@@ -3,6 +3,7 @@ import UserServices from '../services/users.service';
 import ApiController from './api.controller';
 import * as dotenv from 'dotenv';
 import DB from '../config/database';
+import bcrypt from 'bcryptjs';
 
 dotenv.config();
 
@@ -49,6 +50,17 @@ class UsersController extends ApiController {
    * @param res
    */
   createUser(req: Request, res: Response): void {
+    const { name, email, password } = req.body;
+
+    const salt = bcrypt.genSaltSync(10);
+
+    const users = new UserServices();
+    users.createUser({
+      name: name,
+      email: email,
+      password: bcrypt.hashSync(password, salt)
+    });
+
     this.response(res, {
       status: 201,
       message: 'Create User Posted',

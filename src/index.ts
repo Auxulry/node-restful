@@ -5,6 +5,7 @@ import * as winston from 'winston';
 import * as expressWinston from 'express-winston';
 import debug from 'debug';
 import router, { configRoutes } from './routes';
+import bodyParser from 'body-parser';
 
 const app: express.Application = express();
 
@@ -15,7 +16,10 @@ const port = 5000;
 const debugLog: debug.IDebugger = debug('app');
 
 // here we are adding middleware to parse all incoming requests as JSON
-app.use(express.json());
+app.use(bodyParser.json());       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
 
 // here we are adding middleware to allow cross-origin requests
 app.use(cors());
