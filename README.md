@@ -38,7 +38,7 @@ yarn run dev
 
 ## Pre-Configured
 - ExpressJS as framework.
-- typeorm as main database.
+- typeorm as orm.
 - tsyrings as dependecy injector.
 - jsonwebtoken
 
