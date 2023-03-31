@@ -1,26 +1,27 @@
 {
   "compilerOptions": {
-    "target": "ES2021",
     "module": "commonjs",
-    "strict": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
-    "baseUrl": ".",
-    "experimentalDecorators": true,
+    "declaration": true,
+    "removeComments": true,
     "emitDecoratorMetadata": true,
-    "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
     "paths": {
       "@declarations/*": ["src/types/*"],
-      "@entities/*": ["src/domain/entities/*"],
-      "@repositories/*": ["src/domain/repositories/*"],
-      "@usecases/*": ["src/domain/usecases/*"],
+      "@domain/*": ["src/domain/*"],
       "@exceptions/*": ["src/exceptions/*"],
-      "@controllers/*": ["src/interfaces/controllers/*"],
-      "@routes/*": ["src/interfaces/routes/*"],
-      "@utils/*": ["src/utils/*"]
+      "@common/*": ["src/common/*"],
     }
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  }
 }

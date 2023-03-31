@@ -1,9 +1,19 @@
-import { User } from '@entities/user.entity';
+import { User } from '@domain/user/entities/user.entity';
 import { Request, Response } from 'express';
 
 export declare namespace Auth {
   interface AuthResponse {
     accessToken: string
+  }
+
+  interface AuthRegisterRequest {
+    name: string
+    email: string
+    password: string
+  }
+
+  interface AuthenticatedRequest extends Request {
+    user: User;
   }
 
   interface UsecaseInterface {
