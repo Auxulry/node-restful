@@ -6,11 +6,12 @@
    "license": "MIT",
    "scripts": {
       "build": "nest build",
+      "build:clean": "rimraf dist/ && yarn run build",
       "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
       "start": "node dist/main",
       "start:dev": "nest start --watch",
       "start:debug": "nest start --debug --watch",
-      "install:clean": "rm -rf node_modules/ && yarn install",
+      "install:clean": "rimraf node_modules/ && yarn install",
       "typeorm": "typeorm-ts-node-commonjs",
       "migrate:create": "yarn run typeorm migration:create",
       "migrate:run": "yarn run typeorm migration:run -d src/interfaces/database/database.provider.ts",
