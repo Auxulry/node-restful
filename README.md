@@ -32,15 +32,15 @@ yarn install
 # 4. Run on your local.
 # This command is a default to run development mode,
 # and wil be listen http://localhost:5000
-yarn run dev
+yarn run start:dev
 
 ```
 
 ## Pre-Configured
-- ExpressJS as framework.
-- typeorm as main database.
-- tsyrings as dependecy injector.
-- jsonwebtoken
+- NestJS as framework.
+- typeorm as orm.
+- joi as validator.
+- jsonwebtoken.
 
 ## Environment
 For the first time you must create environment in root directory. This List Environment must be create in this project:
@@ -52,147 +52,151 @@ For the first time you must create environment in root directory. This List Envi
 In the project directory, you can run:
 
 ```bash
-# 1. Run in development mode
-yarn run dev
-
-# 2. Run in production server
-yarn run start
-
-# 3. Build (note: make sure the environment is correct for build)
+# 1. Build (note: make sure the environment is correct for build)
 yarn run build
 
-# 4. Delete node_modules and re-install dependencies from package.json
+# 2. clear latest build and reBuild (note: make sure the environment is correct for build)
+yarn run build:clean
+
+# 3. Run prettier format
+yarn run format
+
+# 4. Run in production server
+yarn run start
+
+# 5. Run in development server
+yarn run start:dev
+
+# 6. Run in development server with debug mode
+yarn run start:debug
+
+# 7. Delete node_modules and re-install dependencies from package.json
 yarn run install:clean
 
-# 5. Run the unit-test
-yarn run test
-
-# 6. Watch the unit-test
-yarn run test:watch
-
-# 7. Check Lint all files
-yarn run lint
-
-# 8. Check Lint all files, fixing many violations automatically
-yarn run list:fix
-
-# 9. Typeorm CLI
+# 8. Typeorm CLI
 yarn run typeorm
 
-# 10. Typeorm CLI create migration
+# 9. Typeorm CLI create migration
 yarn run migrate:create [path-to-miration/migration-name]
 
-# 11. Typeorm CLI run migrations
+# 10. Typeorm CLI run migrations
 yarn run migrate:run
 
-# 12. Typeorm CLI revert migrations
+# 11. Typeorm CLI revert migrations
 yarn run migrate:revert
+
+# 12. Check Lint all files
+yarn run lint
+
+# 13. Check Lint all files, fixing many violations automatically
+yarn run list:fix
+
+# 14. Run the jest
+yarn run test
+
+# 15. Watch the unit-test
+yarn run test:watch
+
+# 16. Watch the unit-test with coverage
+yarn run test:cov
+
+# 17. Watch the unit-test with debug mode
+yarn run test:debug
+
+# 18. Watch the e2e test
+yarn run test:e2e
 ```
 
 ## Architecture
 ```
 ├── src
+|   ├── common
+|   ├── decorators
 |   ├── domain
-|   |   ├── entities
-|   |   |   ├── user.entity.ts
-|   |   |   └── ...
-|   |   ├── repositories
-|   |   |   ├── user.repository.ts
-|   |   |   └── ...
-|   |   └── usecases
-|   |       ├── auth.usecase.ts
-|   |       └── ...
+|   |   ├── ...
+|   |   ├── module-name
+|   |   |   ├── entities
+|   |   |   ├── controllers
+|   |   |   ├── repositories
+|   |   |   ├── services
+|   |   |   └── *.module.ts
+|   |   ├── controller.ts
+|   |   ├── entity.ts
+|   |   ├── repository.ts
+|   |   ├── schema.ts
 |   ├── exceptions
 |   |   ├── http.exception.ts
-|   |   ├── not-found.exception.ts
 |   |   └── ...
-|   ├── injector
 |   ├── interfaces
-|   |   ├── controllers
-|   |   |   ├── user.controller.ts
-|   |   |   └── ...
 |   |   ├── database
 |   |   |   ├── migrations
-|   |   |   ├── database.provider.ts
-|   |   |   └── ...
-|   |   ├──  middlewares
-|   |   |   ├── auth.middleware.ts
-|   |   |   └── ...
-|   |   └── routes
-|   |       ├── auth.controller.ts
-|   |       └── ...
-|   ├── third-party
-|   |   └── swagger.ts
+|   |   |   ├── database.module.ts
+|   |   |   └── database.service.ts
+|   ├──  middlewares
+|   |   ├── auth.middleware.ts
+|   |   └── ...
 |   ├── types
 |   |   └── ...
-|   ├── utils
-|   |   └── ...
-|   ├── application.ts
+|   ├── app.controller.ts
+|   ├── app.module.ts
+|   ├── app.service.ts
 |   ├── config.ts
-|   ├── server.ts
+|   └── msin.ts
 ├── tests
-|   ├── domain
-|   |   ├── entities
-|   |   |   ├── user.entity.spec.ts
-|   |   |   └── ...
-|   |   ├── repositories
-|   |   |   ├── user.repository.spec.ts
-|   |   |   └── ...
-|   |   └── usecases
-|   |       ├── user.usecase.spec.ts
-|   |       └── ...
-|   └── interfaces
-|       ├── controllers
-|       |   ├── user.controller.spec.ts
-|       |   └── ...
-|       └── middlewares
-|           ├── auth.middleware.spec.ts
-|           └── ...
+|   ├── *.e2e-spect.ts
+|   └── jest-e2e.json
 ├── node_modules
 ├── .editorconfig
 ├── .env.example
 ├── .eslintignore
 ├── .eslintrc.json
 ├── .gitignore
+├── .prettierrc
 ├── docker-compose.yaml
 ├── Dockerfile
+├── nest-cli.json
 ├── package.json
+├── tsconfig.build.json
 ├── tsconfig.json
 └── README.md
 
 ```
 Contains the database
+- `common`
+Contains the utilities for the application
+- `decorators`
+Contains the custom decorators for the application
 - `domain`
-Contains the domain layer of the application, which includes entities, repositories, and use cases.
+Contains the domain layer of the application, which includes all modules and detail entities, controllers, repositories, schemas and services.
 
     - `entities` Contains the core entities of the application.
+    - `controllers` Contains the endpoint implementations for the application.
+    - `schemas` Contains the joi schemas and open api schemas for the application.
     - `repositories` Contains the interfaces for accessing the data layer.
-    - `usecases` Contains the high-level business logic of the application.
+    - `services` Contains the high-level business logic of the application.
 
 - `exceptions`
 Contains the http error exceptions handler.
-- `injector`
-Contains dependency injector for the application.
 - `interfaces`
-Contains the interfaces layer of the application, which includes controllers, middlewares, routes and data access implementation details.
+Contains the interfaces layer of the application, which includes data access implementation details.
 
-    - `controllers` Contains the endpoint implementations for the application.
     - `database` Contains the database access implementation details.
-    - `middlewares` Contains the middlewares for the application.
-    - `routes` Contains the routes for the application.
-
-- `third-party`
-Contains module/libs for the application.
+- `middlewares`
+Contains the middlewares for the application.
 - `types`
 Contains types declaration for the application.
-- `utils`
-Contains the utilities for the application
-- `application.ts`
-Contains the entry point of the application.
+- `app.controller.ts`
+Contains the root endpoint implementations of the application.
+- `app.module.ts`
+Contains the root nest modules of the application.
+- `app.service.ts`
+Contains the root high-level business logic of the application.
 - `config.ts`
 Contains the configuration settings for the application.
-- `server.ts`
+- `main.ts`
 Contains the HTTP server implementation of the application.
+- `tests`
+Contains the unit test and e2e test of the application.
 
 
 ## Linting & Formating
@@ -276,5 +280,6 @@ In your local VS Code Create User Setting or edit in Json file and will be autom
 This project uses ESLint to catch errors and avoid bikeshedding by enforcing a common code style.
 
 ### Customize configuration
-- See [ExpressJS Documentation](https://expressjs.com/en/4x/api.html).
+- See [NestJS Documentation](https://docs.nestjs.com/).
 - See [Typeorm Documentation](https://typeorm.io/).
+- See [Joi Documentation](https://joi.dev/)
