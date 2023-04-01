@@ -52,54 +52,58 @@ For the first time you must create environment in root directory. This List Envi
 In the project directory, you can run:
 
 ```bash
-# 3. Build (note: make sure the environment is correct for build)
+# 1. Build (note: make sure the environment is correct for build)
 yarn run build
 
+# 2. clear latest build and reBuild (note: make sure the environment is correct for build)
+yarn run build:clean
+
+# 3. Run prettier format
 yarn run format
 
-# 1. Run in production server
+# 4. Run in production server
 yarn run start
 
-# 2. Run in development server
+# 5. Run in development server
 yarn run start:dev
 
-# 2. Run in development server with debug mode
+# 6. Run in development server with debug mode
 yarn run start:debug
 
-# 4. Delete node_modules and re-install dependencies from package.json
+# 7. Delete node_modules and re-install dependencies from package.json
 yarn run install:clean
 
-# 9. Typeorm CLI
+# 8. Typeorm CLI
 yarn run typeorm
 
-# 10. Typeorm CLI create migration
+# 9. Typeorm CLI create migration
 yarn run migrate:create [path-to-miration/migration-name]
 
-# 11. Typeorm CLI run migrations
+# 10. Typeorm CLI run migrations
 yarn run migrate:run
 
-# 12. Typeorm CLI revert migrations
+# 11. Typeorm CLI revert migrations
 yarn run migrate:revert
 
-# 7. Check Lint all files
+# 12. Check Lint all files
 yarn run lint
 
-# 8. Check Lint all files, fixing many violations automatically
+# 13. Check Lint all files, fixing many violations automatically
 yarn run list:fix
 
-# 5. Run the unit-test
+# 14. Run the jest
 yarn run test
 
-# 6. Watch the unit-test
+# 15. Watch the unit-test
 yarn run test:watch
 
-# 6. Watch the unit-test
+# 16. Watch the unit-test with coverage
 yarn run test:cov
 
-# 6. Watch the unit-test
+# 17. Watch the unit-test with debug mode
 yarn run test:debug
 
-# 6. Watch the unit-test
+# 18. Watch the e2e test
 yarn run test:e2e
 ```
 
@@ -276,5 +280,6 @@ In your local VS Code Create User Setting or edit in Json file and will be autom
 This project uses ESLint to catch errors and avoid bikeshedding by enforcing a common code style.
 
 ### Customize configuration
-- See [ExpressJS Documentation](https://expressjs.com/en/4x/api.html).
+- See [NestJS Documentation](https://docs.nestjs.com/).
 - See [Typeorm Documentation](https://typeorm.io/).
+- See [Joi Documentation](https://joi.dev/)
