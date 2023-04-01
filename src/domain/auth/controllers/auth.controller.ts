@@ -6,10 +6,11 @@ import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthResponse, LoginRequest, LoginSchema, RegisterRequest, RequestSchema } from '../schemas/auth.schema';
 import { AuthService } from '../services/auth.service';
+import { Auth } from '@declarations/auth';
 
 @Controller('uthentication')
 @UseFilters(HttpExceptionFilter)
-export class AuthController extends BaseController {
+export class AuthController extends BaseController implements Auth.Controller {
   constructor(private readonly authService: AuthService) {
     super();
     this.register = this.register.bind(this);

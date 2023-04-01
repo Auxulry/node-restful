@@ -3,15 +3,15 @@ import { Auth } from '@declarations/auth';
 import { User } from '@domain/user/entities/user.entity';
 import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BCRYPT_SALT } from 'src/common/constants';
+import { BCRYPT_SALT } from '@common/constants';
 import { UserRepository } from '@domain/user/repositories/user.repository';
 import * as bcrypt from 'bcrypt';
-import { isNull } from 'src/common/properties';
+import { isNull } from '@common/properties';
 import * as jwt from 'jsonwebtoken';
 import { LoginRequest, RegisterRequest } from '../schemas/auth.schema';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements Auth.Service {
   constructor(
     @InjectRepository(UserRepository)
     private userRepository: UserRepository

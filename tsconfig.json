@@ -22,6 +22,7 @@
       "@domain/*": ["src/domain/*"],
       "@exceptions/*": ["src/exceptions/*"],
       "@common/*": ["src/common/*"],
+      "@middlewares/*": ["src/middlewares/*"]
     }
   }
 }
