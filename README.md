@@ -77,7 +77,7 @@ yarn run install:clean
 yarn run typeorm
 
 # 9. Typeorm CLI create migration
-yarn run migrate:create [path-to-miration/migration-name]
+yarn run migrate:create [./path-to-miration/migration-name]
 
 # 10. Typeorm CLI run migrations
 yarn run migrate:run
