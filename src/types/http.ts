@@ -3,6 +3,7 @@ export declare namespace HttpTypes {
     code: number
     status: string
     message: string
+    error?: unknown
   }
 
   interface SuccessResponse<T> {
